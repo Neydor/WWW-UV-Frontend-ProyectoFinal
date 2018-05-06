@@ -1,0 +1,95 @@
+<h4>Gestionar producto <small></small></h4>
+<hr>
+<div class="container">
+  <form (ngSubmit)="guardar(forma)" #forma="ngForm" novalidate="">
+    <div class="form-row">
+      <div class="form-group col-md-6">
+        <label for="inputID">ID</label>
+        <input class="form-control" [ngClass]="{'is-invalid': (ID.errors?.pattern || ID.errors?.minlength || ID.errors?.required) && ID.touched }" type="text" placeholder="ID" name="ID" [ngModel]="producto.id" required minlength="8" maxlength="10" pattern="([0-9]*)"
+          #ID="ngModel">
+        <div *ngIf="ID.errors?.required" class="invalid-feedback">
+          Este campo es requerido.
+        </div>
+        <div *ngIf="ID.errors?.pattern" class="invalid-feedback">
+          Los identificadores solo poseen numeros.
+        </div>
+        <div *ngIf="ID.errors?.minlength" class="invalid-feedback">
+          Por lo menos {{ID.errors.minlength.requiredLength}} caracteres.
+        </div>
+      </div>
+      <div class="form-group col-md-6">
+        <label for="inputNombre">Nombre</label>
+        <input class="form-control" [ngClass]="{'is-invalid': (nombre.errors?.pattern || nombre.errors?.minlength || nombre.errors?.required) && nombre.touched }" type="text" placeholder="Nombre" name="nombre" [ngModel]="producto.nombre" required minlength="3"
+          pattern="[a-z]*" #nombre="ngModel">
+        <div class="invalid-feedback">
+          <div *ngIf="nombre.errors?.required">
+            Este campo es requerido.
+          </div>
+          <div *ngIf="nombre.errors?.pattern">
+            Los nombres solo poseen letras.
+          </div>
+          <div *ngIf="nombre.errors?.minlength">
+            Por lo menos {{nombre.errors.minlength.requiredLength}} caracteres.
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="form-row">
+      <div class="form-group col-md-6">
+        <label for="inputPrecio">Precio</label>
+        <input class="form-control" [ngClass]="{'is-invalid': (precio.errors?.pattern ||
+                    precio.errors?.minlength ||
+                    precio.errors?.required)
+                    && precio.touched }" type="text" placeholder="Precio" name="precio" [ngModel]="producto.precio" required minlength="8" maxlength="10" pattern="([0-9]*)" #precio="ngModel">
+        <div *ngIf="precio.errors?.required" class="invalid-feedback">
+          Este campo es requerido.
+        </div>
+        <div *ngIf="precio.errors?.pattern" class="invalid-feedback">
+          El precio solo poseen numeros.
+        </div>
+        <div *ngIf="precio.errors?.minlength" class="invalid-feedback">
+          Por lo menos {{precio.errors.minlength.requiredLength}} caracteres.
+        </div>
+      </div>
+      <div class="form-group col-md-6">
+        <label for="inputCosto">Costo</label>
+        <input class="form-control" [ngClass]="{'is-invalid': (costo.errors?.pattern || costo.errors?.minlength || costo.errors?.required) && costo.touched }" type="text" placeholder="Costo" [ngModel]="producto.costo" name="costo" required minlength="7" maxlength="10"
+          pattern="[0-9]*" #costo="ngModel">
+        <div *ngIf="costo.errors?.required" class="invalid-feedback">
+          Este campo es requerido.
+        </div>
+        <div *ngIf="costo.errors?.pattern" class="invalid-feedback">
+          Los costos solo poseen numeros.
+        </div>
+
+        <div *ngIf="costo.errors?.minlength" class="invalid-feedback">
+          Por lo menos {{costo.errors.minlength.requiredLength}} caracteres.
+        </div>
+      </div>
+    </div>
+    <div class="form-row">
+      <div class="form-group col-md-6">
+        <label for="inputCantidad">Cantidad</label>
+        <input class="form-control" [ngClass]="{'is-invalid': (
+                    cantidad.errors?.required)
+                    && cantidad.touched }" type="number" placeholder="Cantidad" name="cantidad" [ngModel]="producto.cantidad" required minlength="8" maxlength="10" pattern="([0-9]*)" #cantidad="ngModel">
+        <div *ngIf="cantidad.errors?.required" class="invalid-feedback">
+          Este campo es requerido.
+        </div>
+      </div>
+      <div class="form-group col-md-6 ">
+        <label for="cargo">Presentacion</label>
+        <div class="col-md-6">
+          <select required class="custom-select form-control" name="cargo" [(ngModel)]="producto.presentacion">
+          <option selected value="">Escoja una presentacion.</option>
+          <option  *ngFor="let presentacion of presentaciones" [value]="presentaciones.nombre">{{presentacion.nombre}}</option>
+        </select>
+        </div>
+
+      </div>
+    </div>
+
+    <button [disabled]="!forma.valid" type="submit" class="btn btn-primary">Registrar producto</button>
+  </form>
+</div>

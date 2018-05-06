@@ -1,0 +1,37 @@
+<nav class="navbar navbar-expand-lg navbar-light fondo-navbar">
+  <a class="navbar-brand" routerLink="">_textiles.exe
+  <img src="/assets/img/logo.png" width="30" height="30" alt=""></a>
+
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <div class="collapse navbar-collapse">
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item" routerLinkActive="active">
+        <a class="nav-link" routerLink="/pedido">Pedido</a>
+      </li>
+      <ng-template #anonymousUser>
+      
+      </ng-template>
+      <li class="nav-item dropdown" *ngIf="usuario; else anonymousUser" routerLinkActive="active">
+        <a class="nav-link dropdown-toggle puntero" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          {{usuario.name}}
+        </a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+          <ng-container *ngIf="usuario.admin">
+            <a class="dropdown-item" routerLinkActive="active" routerLink="/admin/pedidos">Adm. Pedidos</a>
+            <a class="dropdown-item" routerLinkActive="active" routerLink="/admin/producto">Adm. Productos</a>
+            <a class="dropdown-item" routerLinkActive="active" routerLink="/admin/proveedores"> Proeedores</a>
+            <a class="dropdown-item" routerLinkActive="active" routerLink="/admin/empleados">Empleados</a>
+          </ng-container>
+          <div class="dropdown-divider"></div>
+          <a class="dropdown-item" (click)="salir()" routerLinkActive="active">LOGOUT</a>
+        </div>
+      </li>
+    </ul>
+    <!--  <button (click)="login()" *ngIf="!auth.isAuthenticated()" class="btn btn-outline-success my-2 my-sm-0" type="button">Ingresar</button>
+    <button (click)="salir()" *ngIf="auth.isAuthenticated()" class="btn btn-outline-danger my-2 my-sm-0" type="button">Cerrar sesion</button>
+-->
+  </div>
+</nav>
