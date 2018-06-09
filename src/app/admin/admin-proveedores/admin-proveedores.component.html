@@ -1,0 +1,32 @@
+
+<div class="container main-container">
+  <h1>Administrar proveedores</h1>
+  <hr><hr>
+  <a routerLink="/admin/proveedores/registrar" class="btn btn-primary">Nuevo proveedor</a>
+<br>
+<hr>
+<div  class="table-responsive ">
+
+    <table  *ngIf="proveedores"datatable [dtOptions]="dtOptions" class="table table-hover table-bordered">
+      <thead>
+        <tr class="text-center">
+          <th  class="align-middle">Nit</th>
+          <th class="align-middle">Nombre</th>
+          <th class="align-middle">Telefono</th>
+          <th class="align-middle">Direccion</th>
+          <th class="align-middle">Edicion</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let e of proveedores">
+          <th class="align-middle text-center" scope="row">{{e.nit}}</th>
+          <td class="align-middle">{{e.nombre}}</td>
+          <td class="align-middle text-right">{{e.telefono}}</td>
+          <td class="align-middle text-right">{{e.direccion}}</td>
+          <td class="align-middle"><a (click)="verProveedor(e.id)" type="button" class="btn  btn-outline-secondary btn-block ">Editar</a></td>
+        </tr>
+      </tbody>
+    </table>
+    <hr>
+  </div>
+  </div>

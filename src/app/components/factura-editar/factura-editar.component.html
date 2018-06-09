@@ -1,0 +1,106 @@
+<h4>Gestionar factura <small></small></h4>
+<hr>
+<div class="container">
+  <form (ngSubmit)="guardar(forma)" #forma="ngForm" novalidate="">
+    <div class="form-row">
+      <div class="form-group col-md-6">
+        <label for="inputId">Id</label>
+        <input class="form-control" [ngClass]="{'is-invalid': (id.errors?.pattern || id.errors?.minlength
+        || id.errors?.required) && id.touched }" type="text" placeholder="Id"
+        name="id" [(ngModel)]="factura.id" required minlength="8" maxlength="10" pattern="([0-9]*)"
+          #id="ngModel">
+        <div *ngIf="id.errors?.required" class="invalid-feedback">
+          Este campo es requerido.
+        </div>
+        <div *ngIf="id.errors?.pattern" class="invalid-feedback">
+          Los ids solo poseen numeros.
+        </div>
+        <div *ngIf="id.errors?.minlength" class="invalid-feedback">
+          Por lo menos {{id.errors.minlength.requiredLength}} caracteres.
+        </div>
+      </div>
+      <div class="form-group col-md-6">
+        <label for="inputNombre">Nombre</label>
+        <input class="form-control" [ngClass]="{'is-invalid': (nombre.errors?.pattern
+        || nombre.errors?.minlength || nombre.errors?.required) && nombre.touched }"
+        type="text" placeholder="Nombre" name="nombre" [(ngModel)]="factura.nombre" required minlength="3"
+          pattern="[A-Za-z]*" #nombre="ngModel">
+        <div class="invalid-feedback">
+          <div *ngIf="nombre.errors?.required">
+            Este campo es requerido.
+          </div>
+          <div *ngIf="nombre.errors?.pattern">
+            Los nombres solo poseen letras.
+          </div>
+          <div *ngIf="nombre.errors?.minlength">
+            Por lo menos {{nombre.errors.minlength.requiredLength}} caracteres.
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="form-row">
+      <div class="form-group col-md-6">
+        <label for="inputPrecio">Precio unitario</label>
+        <input class="form-control" [ngClass]="{'is-invalid': (precioUnidad.errors?.pattern) || (precioUnidad.errors?.required)
+                    && precioUnidad.touched }" type="number" placeholder="Precio"
+                    name="precioUnidad" [(ngModel)]="factura.precioUnidad" required pattern="([0-9]*)" #precioUnidad="ngModel">
+        <div *ngIf="precioUnidad.errors?.required" class="invalid-feedback">
+          Este campo es requerido.
+        </div>
+        <div *ngIf="precioUnidad.errors?.pattern" class="invalid-feedback">
+          El precio solo poseen numeros.
+        </div>
+        </div>
+      <div class="form-group col-md-6">
+        <label for="inputCosto">Costo</label>
+        <input class="form-control" [ngClass]="{'is-invalid': (costoCompra.errors?.pattern
+        || costoCompra.errors?.required) && costoCompra.touched }" type="number" placeholder="Costo" [(ngModel)]="factura.costoCompra" name="costoCompra" required
+          pattern="[0-9]*" #costoCompra="ngModel">
+        <div *ngIf="costoCompra.errors?.required" class="invalid-feedback">
+          Este campo es requerido.
+        </div>
+        <div *ngIf="costoCompra.errors?.pattern" class="invalid-feedback">
+          Los costos solo poseen numeros.
+        </div>
+      </div>
+    </div>
+    <div class="form-row">
+      <div class="form-group col-md-6">
+        <label for="inputCantidad">Cantidad</label>
+        <input class="form-control" [ngClass]="{'is-invalid': (cantidad.errors?.required || cantidad.errors?.pattern)
+                    && cantidad.touched }" type="number" placeholder="Cantidad" name="cantidad" [(ngModel)]="factura.cantidad" required pattern="([0-9]*)" #cantidad="ngModel">
+        <div *ngIf="cantidad.errors?.required" class="invalid-feedback">
+          Este campo es requerido.
+        </div>
+        <div *ngIf="cantidad.errors?.pattern" class="invalid-feedback">
+          La cantidad solo posee numeros.
+        </div>
+      </div>
+      <div class="form-group col-md-6">
+        <label for="docena">Precio al por mayor</label>
+        <input class="form-control" [ngClass]="{'is-invalid': (precioDocena.errors?.required || precioDocena.errors?.pattern)
+                    && precioDocena.touched }" type="number" placeholder="Precio al por mayor"
+                    name="precioDocena" [(ngModel)]="factura.precioDocena" required pattern="([0-9]*)"
+                    #precioDocena="ngModel">
+        <div *ngIf="precioDocena.errors?.required" class="invalid-feedback">
+          Este campo es requerido.
+        </div>
+        <div *ngIf="precioDocena.errors?.pattern" class="invalid-feedback">
+          Ingrese numeros.
+        </div>
+      </div>
+    </div>
+    <div class="form-row">
+      <div class="form-group col-md-6">
+        <label for="inputCantidad">Proveedor</label>
+        <select required class="custom-select form-control" name="proveedores_id"
+        #proveedores_id="ngModel" [(ngModel)]="factura.proveedores_id">
+          <option *ngFor="let pro of proveedores" selected [value]="pro.id">{{pro.nombre}}</option>
+        </select>
+      </div>
+    </div>
+
+    <button [disabled]="!forma.valid" type="submit" class="btn btn-primary">Registrar factura</button>
+  </form>
+</div>

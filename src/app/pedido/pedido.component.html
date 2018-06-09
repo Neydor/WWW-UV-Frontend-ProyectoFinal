@@ -23,7 +23,7 @@
         <div class="form-group col-md-6">
           <label for="inputNombre">Nombre</label>
           <input class="form-control" [ngClass]="{'is-invalid': (nombre.errors?.pattern || nombre.errors?.minlength || nombre.errors?.required) && nombre.touched }" type="text" placeholder="Nombre" name="nombre" [ngModel]="usuario.nombre" required minlength="3"
-            pattern="[a-z]*" #nombre="ngModel">
+            pattern="[A-Za-z]*" #nombre="ngModel">
           <div class="invalid-feedback">
             <div *ngIf="nombre.errors?.required">
               Este campo es requerido.
@@ -40,7 +40,7 @@
       <div class="form-group">
         <label for="inputApellido">Apellido</label>
         <input class="form-control" [ngClass]="{'is-invalid': (apellido.errors?.pattern || apellido.errors?.minlength || apellido.errors?.required) && apellido.touched }" type="text" placeholder="Apellido" [ngModel]="usuario.apellido" name="apellido" required
-          pattern="[a-z]*" minlength="3" #apellido="ngModel">
+          pattern="[A-Za-z]*" minlength="3" #apellido="ngModel">
         <div *ngIf="apellido.errors?.required" class="invalid-feedback">
           Este campo es requerido.
         </div>
@@ -79,37 +79,40 @@
   <hr>
   <div class="table-responsive ">
 
-    <table datatable [dtOptions]="dtOptions" class="table table-hover table-bordered">
+    <table *ngIf="productos" id="tabla" datatable [dtOptions]="dtOptions" class="table table-hover table-bordered">
       <thead>
         <tr class="text-center">
-          <th class="align-middle">ID</th>
+          <th  class="align-middle">ID</th>
           <th class="align-middle">Nombre</th>
-          <th class="align-middle">Precio</th>
+          <th class="align-middle">Codigo</th>
+          <th class="align-middle">Precio Uni</th>
+          <th class="align-middle">Precio x Mayor</th>
           <th class="align-middle">Costo</th>
           <th class="align-middle">Proveedor</th>
-          <th class="align-middle">Presentacion</th>
           <th class="align-middle">Cantidad</th>
           <th class="align-middle">Agregar</th>
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let producto of productos;let i = index" (click)="setClickedRow(i)" [class.active]="i == selectedRow">
+        <tr  *ngFor="let producto of productos">
           <th class="align-middle text-center" scope="row">{{producto.id}}</th>
           <td class="align-middle">{{producto.nombre}}</td>
-          <td class="align-middle text-right">{{producto.precio | currency:'$':true:'4.0-0'}}</td>
-          <td class="align-middle text-right">{{producto.costo}}</td>
-          <td class="align-middle text-right">{{producto.proveedor}}</td>
-          <td class="align-middle text-right" *ngIf="producto.presentaciones">Unidad</td>
-          <td class="align-middle text-right" *ngIf="!producto.presentaciones">Docena</td>
+          <td class="align-middle">{{producto.codigo}}</td>
+          <td class="align-middle text-right">{{producto.precioUnidad | currency:'$':true:'4.0-0'}}</td>
+          <td class="align-middle text-right">{{producto.precioDocena}}</td>
+          <td class="align-middle text-right">{{producto.costoCompra}}</td>
+          <td class="align-middle text-right">{{producto.proveedores.nombre}}</td>
           <td class="align-middle text-right">{{producto.cantidad}}</td>
-          <td class="align-middle"><button type="button" (click)="verProducto(i)" class="btn  btn-outline-secondary btn-block ">Agregar a pedido</button></td>
+          <td class="align-middle text-center">
+              <input id="adas" type="number" class="col-5 form-control" placeholder="">
+        </td>
         </tr>
       </tbody>
     </table>
     <hr>
   </div>
   <hr>
-  <button type="button" (click)="mostrar=!mostrar" class="btn btn-warning btn-block">
+  <button type="submit" (click)="onSelect()"(click)="mostrar=!mostrar" class="btn btn-warning btn-block">
   Facturar
 </button>
 </div>

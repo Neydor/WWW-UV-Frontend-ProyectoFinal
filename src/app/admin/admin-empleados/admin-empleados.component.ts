@@ -15,6 +15,7 @@ export class AdminEmpleadosComponent implements OnInit {
 
   ngOnInit() {
     this.empleados = this._empleadoService.getEmpleados();
+    console.log(this.empleados)
   }
   verEmpleado(idx: number) {
     this.router.navigate(['/admin/producto', idx]);

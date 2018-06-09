@@ -1,3 +1,31 @@
-<p>
-  admin-pedidos works!
-</p>
+
+<div class="container main-container">
+  <h1>Administrar Pedidos</h1>
+  <hr><hr>
+<br>
+<hr>
+<div  class="table-responsive ">
+
+    <table  datatable [dtOptions]="dtOptions" class="table table-hover table-bordered">
+      <thead>
+        <tr class="text-center">
+          <th  class="align-middle">ID</th>
+          <th class="align-middle">Cliente</th>
+          <th class="align-middle">Empleado</th>
+          <th class="align-middle">Estado</th>
+          <th class="align-middle">Detalle</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let e of pedidos;let i = index" (click)="setClickedRow(i)" [class.active]="i == selectedRow">
+          <th class="align-middle text-center" scope="row">{{e.id}}</th>
+          <td class="align-middle">{{e.cliente}}</td>
+          <td class="align-middle text-right">{{e.empleado}}</td>
+          <td class="align-middle text-right">{{e.estado}}</td>
+          <td class="align-middle"><button type="button" (click)="verPedido(i)" class="btn  btn-outline-secondary btn-block ">Detalle</button></td>
+        </tr>
+      </tbody>
+    </table>
+    <hr>
+  </div>
+  </div>

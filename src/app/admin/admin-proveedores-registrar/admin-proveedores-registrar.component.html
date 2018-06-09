@@ -1,0 +1,74 @@
+<h2>Gestionar proveedores <small></small></h2>
+<hr>
+<div class="alert alert-danger" *ngIf="status_proveedor == 'error'"role="alert">
+  El proveedor no se ha guardado, intentalo de nuevo.
+</div>
+<div class="container">
+  <form (ngSubmit)="guardar(forma)" #forma="ngForm" novalidate="">
+    <div class="form-row">
+      <div class="form-group col-md-6">
+        <label for="inputNit">Nit</label>
+        <input class="form-control" [ngClass]="{'is-invalid': (nit.errors?.pattern
+        || nit.errors?.minlength || nit.errors?.required) && nit.touched }" type="text"
+        placeholder="Nit" name="nit" [(ngModel)]="proveedor.nit" required minlength="9" maxlength="10"
+        pattern="([0-9]*)"  #nit="ngModel">
+        <div *ngIf="nit.errors?.required" class="invalid-feedback">
+          Este campo es requerido.
+        </div>
+        <div *ngIf="nit.errors?.pattern" class="invalid-feedback">
+          Los nit solo poseen numeros (digite el nit sin guion).
+        </div>
+        <div *ngIf="nit.errors?.minlength" class="invalid-feedback">
+          Por lo menos {{nit.errors.minlength.requiredLength}} caracteres.
+        </div>
+      </div>
+      <div class="form-group col-md-6">
+        <label for="inputNombre">Nombre</label>
+        <input class="form-control" [ngClass]="{'is-invalid': (nombre.errors?.pattern
+        || nombre.errors?.minlength || nombre.errors?.required) && nombre.touched }"
+        type="text" placeholder="Nombre" name="nombre" [(ngModel)]="proveedor.nombre" required minlength="3"
+          pattern="[A-Za-z]*" #nombre="ngModel">
+        <div class="invalid-feedback">
+          <div *ngIf="nombre.errors?.required">
+            Este campo es requerido.
+          </div>
+          <div *ngIf="nombre.errors?.pattern">
+            Los nombres solo poseen letras.
+          </div>
+          <div *ngIf="nombre.errors?.minlength">
+            Por lo menos {{nombre.errors.minlength.requiredLength}} caracteres.
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="form-row">
+      <div class="form-group col-md-6">
+        <label for="inputTelefono">Telefono</label>
+        <input class="form-control" [ngClass]="{'is-invalid': (telefono.errors?.pattern  ||
+        telefono.errors?.required || telefono.errors?.minlength) && telefono.touched }" type="text" placeholder="Telefono"
+        [(ngModel)]="proveedor.telefono" name="telefono" required minlength="7" maxlength="10"
+          pattern="[0-9]*" #telefono="ngModel">
+        <div *ngIf="telefono.errors?.required" class="invalid-feedback">
+          Este campo es requerido.
+        </div>
+        <div *ngIf="telefono.errors?.pattern" class="invalid-feedback">
+          Los telefonos solo poseen numeros.
+        </div>
+        <div *ngIf="telefono.errors?.minlength" class="invalid-feedback">
+            Por lo menos {{telefono.errors.minlength.requiredLength}} caracteres.
+        </div>
+      </div>
+      <div class="form-group col-md-6">
+        <label for="inputDireccion">Direccion</label>
+        <input class="form-control" [ngClass]="{'is-invalid': (direccion.errors?.required )
+        && direccion.touched }" type="text" placeholder="Direccion" name="direccion"
+        [(ngModel)]="proveedor.direccion" required #direccion="ngModel">
+        <div *ngIf="direccion.errors?.required" class="invalid-feedback">
+          Este campo es requerido.
+        </div>
+      </div>
+    </div>
+  <button  [disabled]="!forma.valid" type="submit" class="btn btn-primary">Registrar proveedor</button>
+  </form>
+</div>

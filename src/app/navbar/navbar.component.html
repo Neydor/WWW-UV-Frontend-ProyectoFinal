@@ -8,25 +8,77 @@
 
   <div class="collapse navbar-collapse">
     <ul class="navbar-nav mr-auto">
-      <li class="nav-item" routerLinkActive="active">
+      <li *ngIf="identity" class="nav-item" routerLinkActive="active">
         <a class="nav-link" routerLink="/pedido">Pedido</a>
       </li>
-      <ng-template #anonymousUser>
-      
-      </ng-template>
-      <li class="nav-item dropdown" *ngIf="usuario; else anonymousUser" routerLinkActive="active">
-        <a class="nav-link dropdown-toggle puntero" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-          {{usuario.name}}
+      <li *ngIf="identity" class="nav-item" routerLinkActive="active">
+        <a class="nav-link" routerLink="/cliente">Cliente</a>
+      </li>
+      <li class="dropdown nav-link navbar-light" *ngIf="!identity" routerLinkActive="active">
+        <a class="dropdown-toggle puntero" data-toggle="dropdown">
+            Login
+          </a>
+        <ul id="login-dp" class="dropdown-menu">
+          <li>
+            <div class="row">
+              <div class="col-md-12">
+                Ingrese sus credenciales
+                <hr>
+                <form (ngSubmit)="onSubmit(forma)" #forma="ngForm" novalidate="">
+                  <div class="form-group">
+                    <label for="inputCorreo">Correo</label>
+                    <input class="form-control" [ngClass]="{'is-invalid': (correo.errors?.pattern ||
+                    correo.errors?.required) && correo.touched }" type="email" placeholder="Correo"
+                    [(ngModel)]="usuario.correo" name="correo" required
+                    pattern="[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,3}$" #correo="ngModel">
+                    <div *ngIf="correo.errors?.required" class="invalid-feedback">
+                      Este campo es requerido.
+                    </div>
+                    <div *ngIf="correo.errors?.pattern" class="invalid-feedback">
+                      El campo no tiene formato de correo.
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label class="sr-only" for="inputPassword">Contraseña</label>
+                    <input class="form-control" [ngClass]="{'is-invalid': (contrasena.errors?.minlength ||
+                    contrasena.errors?.required) && contrasena.touched }" type="password"
+                    placeholder="Contraseña" name="contrasena" [(ngModel)]="usuario.contrasena"
+                    required minlength="4" #contrasena="ngModel">
+                    <div class="invalid-feedback">
+                      <div *ngIf="contrasena.errors?.required">
+                        Este campo es requerido.
+                      </div>
+                      <div *ngIf="contrasena.errors?.minlength">
+                        Por lo menos {{contrasena.errors.minlength.requiredLength}} caracteres.
+                      </div>
+
+                    </div>
+                  </div>
+
+                  <div class="form-group">
+                    <div *ngIf="!infoInvalida" class="help-block text-left text-danger"><label for="">Correo o password invalida</label></div>
+                    <button [disabled]="!forma.valid" type="submit" class="btn btn-primary">Iniciar sesion</button>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </li>
+        </ul>
+      </li>
+
+      <li class="nav-item dropdown" *ngIf="identity" routerLinkActive="active">
+        <a class="nav-link dropdown-toggle puntero text-capitalize" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          {{identity.nombre}}
         </a>
         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-          <ng-container *ngIf="usuario.admin">
+          <ng-container *ngIf="identity.cargo == 'admin'">
             <a class="dropdown-item" routerLinkActive="active" routerLink="/admin/pedidos">Adm. Pedidos</a>
             <a class="dropdown-item" routerLinkActive="active" routerLink="/admin/producto">Adm. Productos</a>
-            <a class="dropdown-item" routerLinkActive="active" routerLink="/admin/proveedores"> Proeedores</a>
+            <a class="dropdown-item" routerLinkActive="active" routerLink="/admin/proveedores"> Proveedores</a>
             <a class="dropdown-item" routerLinkActive="active" routerLink="/admin/empleados">Empleados</a>
           </ng-container>
           <div class="dropdown-divider"></div>
-          <a class="dropdown-item" (click)="salir()" routerLinkActive="active">LOGOUT</a>
+          <a class="dropdown-item" [routerLink]="['logout',1]" routerLinkActive="active"><span class="glyphicon glyphicon-log-out"></span>Cerrar Sesion</a>
         </div>
       </li>
     </ul>

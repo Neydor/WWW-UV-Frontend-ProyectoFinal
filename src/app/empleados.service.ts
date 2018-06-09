@@ -50,7 +50,7 @@ export class EmpleadosService {
       apellido: "Detal",
       telefono: "9999999",
       direccion: "fulandia 987",
-      correo: "Fulanito@textiles.com",
+      correo: "asda@textiles.com",
       contrasena: "perensejoAsdas",
       cargo: false
     }]

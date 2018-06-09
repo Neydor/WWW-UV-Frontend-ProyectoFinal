@@ -2,10 +2,8 @@
   <div class="jumbotron" *ngIf="!usuario">
     <h1 class="display-3">Querido trabajador, bienvenido</h1>
 
-    <p class="lead">Para iniciar su jornada laboral, presione clic en el boton azul de login.</p>
-    <button type="button" (click)="login()" class="btn btn-primary " data-toggle="button" aria-pressed="false" autocomplete="off">
-    Iniciar Sesion
-    </button>
+    <p class="lead">Para iniciar su jornada laboral, ingrese sus credenciales en la parte superior izquierda, dando clic en Login.</p>
+
   </div>
   <div class="jumbotron" *ngIf="usuario">
     <h1 class="display-3">Trabaja con actitud positiva</h1>

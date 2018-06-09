@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {usuario} from '../models/usuario';
-import {AuthService} from './../auth.service';
+//import {AuthService} from './../auth.service';
 
 @Component({
   selector: 'app-home',
@@ -8,13 +7,12 @@ import {AuthService} from './../auth.service';
   styleUrls: ['./home.component.css']
 })
 export class HomeComponent  {
-  usuario:usuario;
-  constructor(private auth:AuthService){
-    auth.usuario$.subscribe(usuario => this.usuario = usuario);
+  usuario:any;
+  constructor(
+    //private auth:AuthService
+  ){
+    //auth.usuario$.subscribe(usuario => this.usuario = usuario);
   }
 
-  login() {
-    this.auth.login();
-  }
 
 }

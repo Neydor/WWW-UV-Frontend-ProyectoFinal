@@ -1,17 +1,25 @@
 <h4>Gestionar empleado <small></small></h4>
 <hr>
+<div class="alert alert-success" *ngIf="status == 'success'">
+  El registro se ha completado correctamente.
+</div>
+<div class="alert alert-danger" *ngIf="status == 'error'">
+  El registro no se ha completado correctamente. Verifique si el user ingresado ya existe.
+</div>
 <div class="container">
   <form (ngSubmit)="guardar(forma)" #forma="ngForm" novalidate="">
     <div class="form-row">
       <div class="form-group col-md-6">
-        <label for="inputID">Cedula</label>
-        <input class="form-control" [ngClass]="{'is-invalid': (cedula.errors?.pattern || cedula.errors?.minlength || cedula.errors?.required) && cedula.touched }" type="text" placeholder="Cedula" name="cedula" [ngModel]="empleado.cedula" required minlength="8" maxlength="10" pattern="([0-9]*)"
-          #cedula="ngModel">
+        <label for="inputcedula">Cedula</label>
+        <input class="form-control" [ngClass]="{'is-invalid': (cedula.errors?.pattern
+        || cedula.errors?.minlength || cedula.errors?.required) && cedula.touched }" type="text"
+        placeholder="Cedula" name="cedula" [(ngModel)]="empleado.cedula" required minlength="8" maxlength="10"
+        pattern="([0-9]*)"  #cedula="ngModel">
         <div *ngIf="cedula.errors?.required" class="invalid-feedback">
           Este campo es requerido.
         </div>
         <div *ngIf="cedula.errors?.pattern" class="invalid-feedback">
-          Los identificadores solo poseen numeros.
+          Las cedulas solo poseen numeros.
         </div>
         <div *ngIf="cedula.errors?.minlength" class="invalid-feedback">
           Por lo menos {{cedula.errors.minlength.requiredLength}} caracteres.
@@ -19,10 +27,10 @@
       </div>
       <div class="form-group col-md-6">
         <label for="inputNombre">Nombre</label>
-        <input class="form-control" [ngClass]="{'is-invalid':
-        (nombre.errors?.pattern || nombre.errors?.minlength || nombre.errors?.required)
-        && nombre.touched }" type="text" placeholder="Nombre" name="nombre" [ngModel]="producto.nombre" required minlength="3"
-          pattern="[a-z]*" #nombre="ngModel">
+        <input class="form-control" [ngClass]="{'is-invalid': (nombre.errors?.pattern
+        || nombre.errors?.minlength || nombre.errors?.required) && nombre.touched }"
+        type="text" placeholder="Nombre" name="nombre" [(ngModel)]="empleado.nombre" required minlength="3"
+          pattern="[A-Za-z]*" #nombre="ngModel">
         <div class="invalid-feedback">
           <div *ngIf="nombre.errors?.required">
             Este campo es requerido.
@@ -39,59 +47,97 @@
 
     <div class="form-row">
       <div class="form-group col-md-6">
-        <label for="inputPrecio">Apellido</label>
-        <input class="form-control" [ngClass]="{'is-invalid': (apellido.errors?.pattern ||
-                    apellido.errors?.minlength ||
-                    apellido.errors?.required)
-                    && apellido.touched }" type="text" placeholder="Apellido" name="apellido" [ngModel]="empleado.apellido" required minlength="8" maxlength="10" pattern="([0-9]*)" #precio="ngModel">
-        <div *ngIf="apellido.errors?.required" class="invalid-feedback">
+        <label for="inputApellido">Apellido</label>
+        <input class="form-control" [ngClass]="{'is-invalid': (apellido.errors?.pattern || apellido.errors?.required ||
+        apellido.errors?.minlength) && apellido.touched }" type="text" placeholder="Apellido"
+        name="apellido" [(ngModel)]="empleado.apellido" required pattern="([A-Za-z]*)" #apellido="ngModel">
+        <div class="invalid-feedback">
+        <div *ngIf="apellido.errors?.required">
           Este campo es requerido.
         </div>
-        <div *ngIf="precio.errors?.pattern" class="invalid-feedback">
-          El precio solo poseen numeros.
-        </div>
-        <div *ngIf="precio.errors?.minlength" class="invalid-feedback">
-          Por lo menos {{precio.errors.minlength.requiredLength}} caracteres.
+        <div *ngIf="apellido.errors?.pattern" >
+          Los apellidos solo poseen letras.
         </div>
       </div>
+        </div>
       <div class="form-group col-md-6">
-        <label for="inputCosto">Costo</label>
-        <input class="form-control" [ngClass]="{'is-invalid': (costo.errors?.pattern || costo.errors?.minlength || costo.errors?.required) && costo.touched }" type="text" placeholder="Costo" [ngModel]="producto.costo" name="costo" required minlength="7" maxlength="10"
-          pattern="[0-9]*" #costo="ngModel">
-        <div *ngIf="costo.errors?.required" class="invalid-feedback">
+        <label for="inputTelefono">Telefono</label>
+        <input class="form-control" [ngClass]="{'is-invalid': (telefono.errors?.pattern  ||
+        telefono.errors?.required || telefono.errors?.minlength) && telefono.touched }" type="text" placeholder="Telefono"
+        [(ngModel)]="empleado.telefono" name="telefono" required minlength="7" maxlength="10"
+          pattern="[0-9]*" #telefono="ngModel">
+        <div *ngIf="telefono.errors?.required" class="invalid-feedback">
           Este campo es requerido.
         </div>
-        <div *ngIf="costo.errors?.pattern" class="invalid-feedback">
-          Los costos solo poseen numeros.
+        <div *ngIf="telefono.errors?.pattern" class="invalid-feedback">
+          Los telefonos solo poseen numeros.
         </div>
-
-        <div *ngIf="costo.errors?.minlength" class="invalid-feedback">
-          Por lo menos {{costo.errors.minlength.requiredLength}} caracteres.
+        <div *ngIf="telefono.errors?.minlength" class="invalid-feedback">
+            Por lo menos {{telefono.errors.minlength.requiredLength}} caracteres.
         </div>
       </div>
     </div>
     <div class="form-row">
       <div class="form-group col-md-6">
-        <label for="inputCantidad">Cantidad</label>
-        <input class="form-control" [ngClass]="{'is-invalid': (
-                    cantidad.errors?.required)
-                    && cantidad.touched }" type="number" placeholder="Cantidad" name="cantidad" [ngModel]="producto.cantidad" required minlength="8" maxlength="10" pattern="([0-9]*)" #cantidad="ngModel">
-        <div *ngIf="cantidad.errors?.required" class="invalid-feedback">
+        <label for="inputCorreo">Correo</label>
+        <input class="form-control" [ngClass]="{'is-invalid': (correo.errors?.required || correo.errors?.pattern)
+        && correo.touched }" type="text" placeholder="Correo" name="correo"
+        [(ngModel)]="empleado.correo" required pattern="([a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$)" #correo="ngModel">
+        <div *ngIf="correo.errors?.required" class="invalid-feedback">
           Este campo es requerido.
         </div>
+        <div *ngIf="correo.errors?.pattern" class="invalid-feedback">
+
+        </div>
       </div>
-      <div class="form-group col-md-6 ">
-        <label for="cargo">Presentacion</label>
-        <div class="col-md-6">
-          <select required class="custom-select form-control" name="cargo" [(ngModel)]="producto.presentacion">
-          <option selected value="">Escoja una presentacion.</option>
-          <option  *ngFor="let presentacion of presentaciones" [value]="presentaciones.nombre">{{presentacion.nombre}}</option>
-        </select>
+      <div class="form-group col-md-6">
+        <label for="inputContrasena">Contraseña</label>
+        <input class="form-control" [ngClass]="{'is-invalid': (contrasena.errors?.required || contrasena.errors?.minlength)
+        && contrasena.touched }" type="text" placeholder="Contrasena" name="contrasena"
+        [(ngModel)]="empleado.contrasena" required minlength="6" #contrasena="ngModel">
+        <div *ngIf="contrasena.errors?.required" class="invalid-feedback">
+          Este campo es requerido.
+        </div>
+        <div *ngIf="contrasena.errors?.minlength" class="invalid-feedback">
+          Por los menos {{contrasena.errors?.minlength.requiredLength}} caracteres.
+        </div>
+      </div>
+    </div>
+    <div class="form-row">
+      <div class="form-group col-md-6">
+        <label for="inputDireccion">Direccion</label>
+        <input class="form-control" [ngClass]="{'is-invalid': (direccion.errors?.required )
+        && direccion.touched }" type="text" placeholder="Direccion" name="direccion"
+        [(ngModel)]="empleado.direccion" required #direccion="ngModel">
+        <div *ngIf="direccion.errors?.required" class="invalid-feedback">
+          Este campo es requerido.
         </div>
 
       </div>
-    </div>
+      <div class="form-group col-md-6 ">
+        <label for="estado">Estado</label>
+        <div class="">
+          <select required class="custom-select form-control" name="estado"
+          #estado="ngModel" [(ngModel)]="empleado.estado">
+            <option selected value="1">Activo</option>
+            <option value="0">Inactivo</option>
+          </select>
+        </div>
+      </div>
 
-    <button [disabled]="!forma.valid" type="submit" class="btn btn-primary">Registrar producto</button>
+    </div>
+    <div class="form-row">
+      <div class="form-group col-md-6 ">
+        <label for="cargo">Cargo</label>
+        <div class="">
+          <select required class="custom-select form-control" name="cargo"
+          #cargo="ngModel" [(ngModel)]="empleado.cargo">
+            <option selected value="vendedor">Asesor de ventas</option>
+            <option value="admin">Analista de compras</option>
+          </select>
+        </div>
+      </div>
+    </div>
+    <button  [disabled]="!forma.valid" type="submit" class="btn btn-primary">Registrar empleado</button>
   </form>
 </div>

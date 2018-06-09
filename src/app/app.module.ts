@@ -7,17 +7,19 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { FormsModule } from '@angular/forms';
-import { HttpModule } from '@angular/http';
+import { HttpClientModule } from '@angular/common/http';
 import { AngularFireDatabaseModule } from 'angularfire2/database';
 import { AngularFireAuthModule } from 'angularfire2/auth';
 import { AngularFireModule } from 'angularfire2';
 //servicios
-import { AuthService } from './auth.service';
-import { AuthGuardService } from './auth-guard.service';
-import { UserService } from './user.service';
-import { AdminAuthGuardService } from './admin-auth-guard.service';
-import {ProductoService} from './producto.service';
-import {EmpleadosService} from './empleados.service';
+//import { AuthService } from './auth.service';
+//import { AuthGuardService } from './auth-guard.service';
+import { UserService } from './services/user.service';
+import { ClienteService } from './services/cliente.service';
+//import { AdminAuthGuardService } from './admin-auth-guard.service';
+import { ProductoService } from './services/producto.service';
+import { EmpleadosService } from './empleados.service';
+import { ProveedorService} from './services/proveedor.service';
 //componentes
 import { AppComponent } from './app.component';
 import { ProductosComponent } from './productos/productos.component';
@@ -32,6 +34,16 @@ import { LoginComponent } from './login/login.component';
 import { CrearProductoComponent } from './admin/crear-producto/crear-producto.component';
 import { AdminEmpleadosComponent } from './admin/admin-empleados/admin-empleados.component';
 import { AdminEmpleadoRegistrarComponent } from './admin/admin-empleado-registrar/admin-empleado-registrar.component';
+import { AdminProveedoresComponent} from './admin/admin-proveedores/admin-proveedores.component';
+import { AdminProveedoresRegistrarComponent } from './admin/admin-proveedores-registrar/admin-proveedores-registrar.component';
+
+import { AdminProveedoresEditarComponent } from './admin/admin-proveedores-editar/admin-proveedores-editar.component';
+import { ClienteComponent } from './components/cliente/cliente.component';
+import { ClienteRegistrarComponent } from './components/cliente-registrar/cliente-registrar.component';
+import { ClienteEditarComponent } from './components/cliente-editar/cliente-editar.component';
+import { FacturaComponent } from './components/factura/factura.component';
+import { FacturaRegistrarComponent } from './components/factura-registrar/factura-registrar.component';
+import { FacturaEditarComponent } from './components/factura-editar/factura-editar.component';
 
 @NgModule({
   declarations: [
@@ -48,22 +60,35 @@ import { AdminEmpleadoRegistrarComponent } from './admin/admin-empleado-registra
     CrearProductoComponent,
     AdminEmpleadosComponent,
     AdminEmpleadoRegistrarComponent,
+    AdminProveedoresComponent,
+    AdminProveedoresRegistrarComponent,
+    AdminProveedoresEditarComponent,
+    ClienteComponent,
+    ClienteRegistrarComponent,
+    ClienteEditarComponent,
+    FacturaComponent,
+    FacturaRegistrarComponent,
+    FacturaEditarComponent,
   ],
   imports: [
     APP_ROUTING,
     BrowserModule,
     DataTablesModule,
-    HttpModule,
+    HttpClientModule,
     FormsModule,
-    AngularFireModule.initializeApp(environment.firebase),
-    AngularFireAuthModule,
-    AngularFireDatabaseModule
+    // AngularFireModule.initializeApp(environment.firebase),
+    // AngularFireAuthModule,
+    // AngularFireDatabaseModule
   ],
-  providers: [AuthService,
+  providers: [//AuthService,
     ProductoService,
-    AuthGuardService,
+    ClienteService,
+    //AuthGuardService,
     UserService,
-    AdminAuthGuardService,EmpleadosService],
+    //AdminAuthGuardService,
+    EmpleadosService,
+    ProveedorService
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
